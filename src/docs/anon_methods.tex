@@ -1,0 +1,69 @@
+Soit un ensemble d'agents $(A_1,...,A_n)$ qui s'échangent des messages sur un canal 
+de communication par défaut unidirectionnel (et bidirectionnel lorsque précisé). 
+Un agent peut être un émetteur ou/et un récepteur. Tout message transite vers un système d'anonymat
+dans un modèle de boîte noire.
+Selon la nature de la méthode d'anonymat utilisée, un agent peut être dénoté par 
+une adresse \acrshort{ip}, une clef publique..
+Le canal de communication est surveillé par un observateur, qui souhaite par exemple 
+connaître l'identité de l'émetteur ou du récepteur d'un message.
+Cet observateur est un adversaire honnête mais curieux\cite[2]{hbc}, un participant légitime qui ne s'écarte pas 
+du protocole défini mais tente d'obtenir toutes les informations possibles à partir 
+des messages reçus légitimement. Les \textit{\gls{blockchain}s} Bitcoin et Monero étant 
+publiques, l'observateur a accès possiblement en lecture à toutes les transactions 
+publiées sur ces registres. On s'intéressera principalement à l'anonymat de l'émetteur, 
+le principe est analogue pour l'anonymat du récepteur. L'anonymat de l'émetteur 
+consiste à être indistinguable\cite{anon_term} au sein d'un ensemble, l'ensemble d'anonymat 
+(\og \textit{anonymity set}\fg). Il y a un ensemble d'émetteurs possibles
+et l'observateur ne peut pas faire la distinction entre les émetteurs de cet 
+ensemble. L'observateur souhaite connaître quel émetteur parmi l'ensemble d'anonymat 
+est à l'origine d'un message, il assigne une probabilité pour chaque émetteur. Deux méthodes d'anonymat sont analysées : les adresses jetables et les signatures en anneau.\\
+D'autres méthodes auraient pu être explorées :
+\begin{itemize}
+    \item Mixeur : service qui permet d'offusquer la relation entre entrées et sorties d'une transaction, et préserver l'anonymat relationnel. Ce service peut être centralisé, c'est à dire qu'il dépend d'un serveur central pour effectuer le mixing.
+    Un problème de confiance est inhérent avec cette approche : il n'y a aucune certitude que ce type de service ne conserve des logs (adresses \textit{blockchain}, adresses \acrshort{ip}..) ou redistribue les jetons. 
+    \item \acrshort{tor} (le routage en oignon) : réseau superposé et distribué permettant d'anonymiser les applications basées sur le protocole \acrshort{tcp}.
+    Chaque utilisateur (\og \textit{onion proxy}\fg) choisit un chemin à travers le réseau et construit un circuit, dans lequel chaque noeud (\og \textit{onion router}\fg) connaît uniquement son prédecesseur et son successeur dans celui-ci.
+    \item \acrshort{vpn} IPsec mode tunnel
+\end{itemize}
+
+\begin{comment}
+\subsection{Mixeur}
+\input{docs/am_mixer.tex}
+
+\subsection{Le routeur en oignon (\acrshort{tor})}
+\input{docs/am_tor.tex}
+
+\subsection{Réseau virtuel privé (\acrshort{vpn})}
+ 
+Un \acrshort{vpn} permet de sécuriser la couche \acrshort{tcp}/\acrshort{ip}. 
+Plus précisément, un \acrshort{vpn} \acrshort{ssl} sécurise la couche 
+\acrshort{tcp} tandis qu'un \acrshort{vpn} \acrshort{ipsec} sécurise la couche \acrshort{ip}.\\ 
+Un \acrshort{vpn} \acrshort{ssl} crée une connexion \acrshort{tcp} entre un client et un serveur 
+sécurisée par le protocole \acrshort{ssl}.\\ 
+Cependant, les adresses \acrshort{ip} du client et du serveur ne sont pas offusquées car la 
+couche \acrshort{ip} n'est pas prise en compte. Un \acrshort{vpn} \acrshort{ipsec} sécurise lui 
+la couche \acrshort{ip}, il existe 2 modes : transport et tunnel. Le mode transport ne protège 
+que la charge utile du paquet \acrshort{ip}, et non l'en-tête. Le mode tunnel protège à la fois la charge 
+utile et l'en-tête du paquet \acrshort{ip}. Une nouvelle en-tête \acrshort{ip} est créée, l'en-tête
+\acrshort{ip} originale est chiffrée.\\
+Parmi ces 3 techniques, l'en-tête \acrshort{ip} originale est uniquement modifiée par
+un \acrshort{vpn} \acrshort{ipsec} en mode tunnel.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.8]{pics/ipsec.png}
+    \caption{Datagramme \acrshort{ipsec} mode \acrshort{esp}-tunnel}
+\end{figure}
+
+\begin{proposition}
+    Un \acrshort{vpn} \acrshort{ipsec} en mode tunnel garantit un anonymat $\alpha_3$ 
+    si la résolution suivante est difficile :\\ 
+    $\Gamma \: := ip\_addr_{new} \mapsto ip\_addr_{original}$
+\end{proposition}  
+\end{comment}
+
+\subsection{Adresse jetable}
+\input{docs/am_stealth.tex}
+
+\subsection{Signature en anneau}
+\input{docs/am_rs.tex}

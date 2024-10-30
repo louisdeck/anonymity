@@ -1,0 +1,70 @@
+\acrshort{tor}\cite{tor_wp} est un protocole implémentant un routage en oignon.
+Le routage en oignon est un réseau superposé et distribué
+permettant d'anonymiser les applications basées sur le protocole \acrshort{tcp}.
+Chaque utilisateur (\og \textit{onion proxy}\fg) choisit un chemin à travers le réseau et 
+construit un circuit, dans lequel chaque noeud (\og \textit{onion router}\fg) connaît 
+uniquement son prédecesseur et son successeur dans celui-ci. 
+%Certains noeuds sont de confiance et font office de \og \textit{directory servers}\fg , 
+%ils fournissent les noeuds connus et leurs états.
+Contrairement à un \og \textit{chaum-mix}\fg, un noeud ne stocke pas les messages 
+et les transmet le plus vite possible avec une volonté de fournir 
+une faible latence aux utilisateurs.
+
+\medskip 
+
+Le trafic transite à travers le circuit dans des cellules de taille fixe de 512 bits, 
+qui sont déballées (\og \textit{unwrapped}\fg) avec une clef symétrique \acrshort{aes} 
+de 128 bits à chaque nœud et relayées en aval.
+Chaque noeud maintient à long terme une clef d'identité et à court terme une clef oignon.
+La première est utilisée pour signer les certificats \acrshort{ssl} et une description 
+des paramètres (clefs, adresses, politiques de sortie) de son noeud.
+La seconde est utilisée pour déchiffrer les requêtes des utilisateurs souhaitant 
+établir un circuit et négocier des clefs éphémères.
+Les noeuds communiquent donc entre eux et avec les utilisateurs via des connexions 
+\acrshort{ssl} avec ces clefs éphémères.
+
+\medskip 
+
+Un client construit un circuit progressivement, négociant une clef symétrique
+avec chaque noeud du circuit, un \og \textit{hop}\fg à la fois.
+Pour commencer à créer un circuit, le client envoie une cellule 
+\og \textit{create}\fg au premier noeud dans son chemin choisi. 
+La charge utile de cette cellule contient la première moitié de la 
+poignée de main Diffie-Hellman ($g^x$), chiffrée avec la clef oignon
+du noeud. Le noeud répond avec une cellule \og \textit{created}\fg
+contenant $g^y$ et un haché de la clef négociée $K=g^{xy}$.
+Le client n'utilise pas de clef publique et reste anonyme! Le client et
+le noeud se mettent d'accord sur une clef et Alice sait uniquement 
+que le noeud l'a apprise.
+
+\begin{definition}[Arrangement]
+    Un arrangement, noté $A^k_n$ est une permutation de k élements parmi n éléments 
+    ($k \leq n$).
+    Les éléments sont pris sans répétition et sont ordonnés.   
+\end{definition}
+
+\begin{definition}[Circuit]
+    Soient un ensemble fini $A$ d'agents, un ensemble fini $N$ de \textit{mixes}, 
+    un ensemble fini $C$ de circuits, un ensemble fini $K_s$ de clefs symétriques et un 
+    ensemble fini $K_a$ de clefs asymétriques.
+
+    \medskip
+    \noindent
+    Un \textit{mix} $n \in N$ est un tuple \{$ip\_addr_{flag}$, tcp\_port, $K_s^1$,
+    $K_a^1$\} dont flag = entry $\vee$ middle $\vee$ exit\\
+    $K_s^1 \in K_s, K_a^1 \in K_a$
+
+    \medskip 
+    \noindent
+    Un utilisateur $u \in U$ est un tuple \{ip\_addr, tcp\_port, $K_a$\}.
+
+    \medskip 
+    \noindent
+    Un circuit $c \in C$ est un arrangement de \textit{mixes} pour $a \in A$.
+\end{definition}
+
+\begin{proposition}
+    Un routage en oignon garantit un anonymat $\alpha_2$ si les résolutions suivantes 
+    sont difficiles :\\ 
+    $\forall c \in C, \: \Gamma := ip\_addr_{exit}^n \mapsto ip\_addr^u$
+\end{proposition}

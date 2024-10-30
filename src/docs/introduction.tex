@@ -1,0 +1,55 @@
+\noindent
+Les échanges financiers sur Internet reposent presque exclusivement via les institutions 
+financières, qui agissent comme tiers de confiance pour le traitement des paiements 
+électroniques.\\
+L'anonymat et la décentralisation sont des caractéristiques intéressantes à explorer
+pour le futur des paiements électroniques, à cause des inévitables conflits d'intérêt 
+entre les autorités centrales et les utilisateurs.\\
+En 2008, \og Bitcoin\cite{bitcoin_wp}: A Peer-to-Peer Electronic Cash System \fg publié 
+sous le pseudonyme Satoshi Nakamoto, a partagé une solution permettant à deux parties 
+d'échanger de la monnaie électronique.\\
+La particularité de cette solution est la suppression de ce modèle de confiance 
+par l'ajout d'une preuve cryptographique.
+
+\bigskip
+
+%Bitcoin a été la première solution pair à pair, pseudonyme et voulue décentralisée.\\
+À ses débuts, Bitcoin a été qualifié comme une monnaie électronique \og anonyme \fg
+et non pseudonyme.
+Le pseudonymat de l'utilisateur repose sur l'hypothèse que son pseudonyme, 
+l'adresse d'un compte dérivée à partir d'une paire de clefs, ne soit pas lié à sa 
+véritable identité.
+D'autres vulnérabilités peuvent être exploitées par un adversaire souhaitant désanonymiser 
+des utilisateurs. Le réseau Bitcoin est un réseau \acrshort{p2p} où les participants 
+sont interconnectés via un canal \acrshort{tcp} non chiffré. Les participants du réseau, plus connus 
+sous le nom de noeuds, maintiennent à jour une liste d'adresses \acrshort{ip} de leurs noeuds voisins. 
+Après qu'une transaction ait été créée, celle-ci est propagée aux noeuds voisins du noeud 
+originaire de la transaction, qui vont eux-mêmes propager la transaction à leurs propres 
+noeuds voisins. Si un noeud contrôlé par un adversaire peut s'assurer qu'une connexion entrante 
+faisant part d'une transaction provient de l'auteur même de la transaction, l'adversaire peut
+corréler l'adresse \acrshort{ip} du noeud et la transaction, compromettant l'anonymat.
+Une atténuation est d'utiliser un \acrshort{vpn} (de confiance !) ou \acrshort{tor} afin d'offusquer sa 
+réelle adresse \acrshort{ip}.
+Un autre risque provient de la nature publique des transactions (voir 2.2) et de
+l'exploitation du \acrshort{tga}.
+
+\bigskip
+
+Depuis, des protocoles comme CryptoNote\cite{monero_wp} à l'origine de Monero, ont émergé 
+mettant l'accent sur la vie privée et l'anonymat. Le \acrshort{tga} n'est plus exploitable car : 
+\begin{itemize}
+    \item les entrées de transaction ne sont plus liées à un seul émetteur grâce 
+    aux signatures en anneau 
+    \item une adresse de réception unique est générée par l'émetteur pour chaque transaction grâce
+    aux adresses jetables (\og one-time addresses \fg)
+    \item les montants sont rendus confidentiels grâce à \acrshort{ringct}
+    %RingCT est utilisé pour cacher le montant de la transaction en combinant plusieurs 
+    %transactions avec le même montant de sortie en une seule transaction.
+\end{itemize}
+
+\medskip 
+\noindent
+Le prochain chapitre sera consacré à introduire la notion d'espaces de noms (\og \textit{namespace} \fg).
+L'un des objectifs de ce travail est d'énumérer les espaces de noms en rapport à l'anonymat 
+ainsi que des relations entre espaces de noms pouvant compromettre l'anonymat ou au contraire 
+le garantir.

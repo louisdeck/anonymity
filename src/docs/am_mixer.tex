@@ -1,0 +1,41 @@
+La notion de \og\textit{mix}\fg\cite{mix_wp} a été présenté par David Chaum
+en 1981, dans le cadre de communications anonymes d'emails.
+Au lieu d'envoyer directement un message à $A_2$, $A_1$ transmet le message 
+à un ou plusieurs \textit{mixes}. Chaque \textit{mix} attend 
+qu'un certain nombre de messages arrivent avant de les déchiffrer et de les
+transmettre dans un ordre aléatoire, cachant ainsi la correspondance entre 
+les messages entrants et sortants. Un mix est donc un appareil qui stocke 
+et transmet des messages avec une latence élevée.
+Cela permet d'offusquer la relation entre émetteurs et récepteurs, dans un objectif 
+de préserver l'anonymat relationnelle (qui communique avec qui).
+
+\medskip 
+\noindent
+Dans le cadre de la \textit{blockchain}, un mixeur est un service 
+qui permet d'offusquer la relation entre entrées et sorties d'une transaction.
+Ce service peut être centralisé, c'est à dire qu'il dépend d'un serveur 
+central pour effectuer le mixing.
+Un problème de confiance est inhérent avec cette approche : il n'y a 
+aucune certitude que ce type de service ne conserve des logs 
+(adresses \textit{blockchain}, adresses \acrshort{ip}..) ou redistribue 
+les jetons. D'autres alternatives décentralisées existent, 
+ne dépendant pas d'un serveur de mixing centralisé.
+
+\begin{definition}[Mixeur]
+    Un mixeur est un quadruplet X=(E,R,M,N) où :
+    \begin{itemize}
+        \item E est un ensemble fini d'émetteurs 
+        \item R est un ensemble fini de récepteurs
+        \item M est un ensemble fini de messages
+        \item N est un ensemble fini de {\textit{mixes}}
+    \end{itemize}
+\end{definition}
+
+\begin{proposition}
+    Soient 4 agents $A_1, A_2, A_3, A_4$ dont $A_3$ et $A_4$ appartiennent à un mixeur.\\
+    $A_1$ envoie un message à $A_2$ via un mixeur : $A_1 \rightarrow A_3 \wedge A_4 
+    \rightarrow A_2$\\
+    Un mixeur garantit un anonymat $\alpha_1$ si les résolutions suivantes sont difficiles 
+    :\\
+    $\Gamma_1 := A_3 \mapsto A_4 \wedge \Gamma_2 := A_4 \mapsto A_3$
+\end{proposition}

@@ -1,0 +1,43 @@
+\begin{definition}[Espace de noms]
+    Un espace de noms est un ensemble fini d'éléments, qui sont des noms.
+\end{definition}
+
+\begin{example}
+    Une adresse \acrshort{ip}v4 est un espace de noms,
+    composée d'une chaîne binaire de 32 bits,
+    avec un total de $2^{32}$ valeurs.
+\end{example}
+
+\begin{example}
+    Une clef publique Bitcoin est un espace de noms, 
+    composée d'une chaîne binaire de 256 bits, 
+    avec un total de $2^{256} - 2^{32} - 977$ valeurs\cite{bitcoin_secp}.
+\end{example}
+
+\begin{proposition}[Composition]
+    Un espace de noms peut être une composition de deux ou plusieurs 
+    espaces de noms.\\
+    Soient 2 espaces de noms A et B, la composition de ces 2 espaces 
+    est définie comme un espace de noms C, étant le produit cartésien 
+    de A et B : $C = A \times B$
+\end{proposition}
+
+\begin{example}
+    Soient A une adresse Bitcoin et B une adresse \acrshort{ip}, 
+    un portefeuille C hébergé sur une plateforme d'échange peut être représenté 
+    tel que : $C = btc\_addr \times ip\_addr$ 
+\end{example}
+
+\begin{proposition}[Résolution]
+    Un espace de noms peut être résolu en un autre espace de noms.\\
+    Soient 2 espaces de noms A et B, la résolution de A en B se définit telle que 
+    $\Gamma : A \longrightarrow B$
+\end{proposition}
+
+\begin{example}
+    Soient A un nom d'hôte et B une adresse \acrshort{ip}v4, 
+    le protocole \acrshort{dns} permet de résoudre une adresse \acrshort{ip}v4 
+    à partir d'un nom d'hôte ; 
+    $\Gamma : hostname \longrightarrow ip\_addr$
+\end{example}
+

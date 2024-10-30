@@ -1,0 +1,63 @@
+Dans le contexte d'une \textit{\gls{blockchain}}, une adresse est un espace de noms qui sert 
+de mécanisme de routage dans un système distribué. Une adresse 
+Bitcoin\cite{bitcoin_address} (\acrshort{p2pkh}) est composée de 160 bits.
+Un espace d'adressage fait référence au nombre d'adresses disponibles dans un espace 
+donné, il est de $2^{160}$ pour une adresse Bitcoin. 
+Chaque adresse, étant la sortie du haché de la clef publique correspondante, peut être 
+considérée comme une clé unique.
+
+\bigskip 
+\noindent
+Les adresses Bitcoin \& Monero\cite{monero_address, monero_address2} sont définies 
+ci-dessous respectivement.\\
+$G$ représente un point de base de la courbe elliptique (secp256k1\cite{bitcoin_secp} 
+pour Bitcoin et Ed25519\cite[5]{monero_wp} pour Monero).
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|l|l|}
+    \hline
+        espace & taille en bits & description \\ \hline
+        priv key $k$ & 256 & génération de bits pseudo-aléatoire \\ \hline
+        pub key $K$ & 256 & $K=kG$ \\ \hline
+        address & 160 & base58(0x00 + ripemd160(sha256($K$)) + checksum) \\ \hline
+        balance & ~ & \acrshort{utxo} \\ \hline
+    \end{tabular}
+    \caption{Adresse Bitcoin}
+\end{table}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|l|l|}
+    \hline
+        espace & taille en bits & description \\ \hline
+        priv spend key $k^s$ & 256 & génération de bits pseudo-aléatoire \\ \hline
+        priv view key $k^v$ & 256 & $k^v$ = $H(k^s)$ \\ \hline
+        pub spend key $K^s$ & 256 & $K^s = k^sG$ \\ \hline
+        pub view key $K^v$ & 256 & $K^v = k^vG$ \\ \hline
+        address & 552 & base58(0x12 + $K^s||K^v$ + checksum) \\ \hline
+        open alias & ~ & nom d'hôte associé à une adresse \\ \hline
+        balance & ~ & \acrshort{utxo} \\ \hline
+    \end{tabular}
+    \caption{Adresse Monero}
+\end{table}
+
+\noindent 
+La somme de contrôle d'une adresse Bitcoin est égale à : 
+sha256(sha256(0x00 + ripemd160(sha256($K$))))[0:31]\\
+La somme de contrôle d'une adresse Monero est égale à : 
+keccak256(0x18 + $K$)[0:31]
+
+\bigskip 
+
+\begin{itemize}
+    \item Les clefs Monero sont deux fois plus grandes que les clefs Bitcoin
+    \item Les adresses Monero possèdent 392 bits de plus que les adresses Bitcoin
+    \item Monero scinde les clefs en 2 usages : \og \textit{spend} \fg pour défenser 
+    des fonds et \og \textit{view} \fg pour obtenir le solde et l'historique de transactions
+    d'une adresse
+    \item Le solde et l'historique de transactions d'une adresse Bitcoin sont publiques.
+    Contrairement à Monero, où l'on peut choisir de communiquer $k_v$
+    \item Dans une transaction Bitcoin, les adresses et les montants associés 
+    sont publiques tandis que Monero anonymise ces informations.
+\end{itemize}

@@ -1,0 +1,41 @@
+Les adresses jetables sont des adresses pseudo-aléatoires à usage unique, générées 
+par l'expéditeur pour chaque transaction, permettant de masquer l'adresse du 
+destinataire. Le destinataire publie une seule adresse mais tous ses paiements 
+entrants sont adressés à des adresses uniques, elles ne peuvent pas être liées à 
+l'adresse du destinataire. La propriété de non-liaison\cite[1]{monero_wp} 
+(\og \textit{unlinkability}\fg) est satisfaite : pour deux transactions sortantes, 
+il est impossible de prouver qu’elles ont été envoyées à la même adresse.
+
+\bigskip 
+\noindent 
+$H_s$ : une fonction de hachage cryptographique $\{0,1\}^* \rightarrow \mathds{F}_q$ \\
+$G$ : Point de base de la courbe Ed25519\\
+$l$ = $2^{252} + 27742317777372353535851937790883648493$
+  
+\begin{enumerate}
+    \item Alice génère $r \in [1,l-1]$
+    \item Alice calcule l'adresse jetable correspondante : $S = H_s(rK^v_b)G + K^s_b$
+    \item Alice envoie une transaction avec S comme destinataire (contenant R=rG)
+    \item Bob vérifie toutes les transactions qui transitent sur le réseau et calcule : 
+    $S'=H_s(Rk^v_b)G + K^s_b$
+    \item Bob consomme la sortie si $S = S' \: (R \: k^v_b= rG \: k^v_b = rK^v_b)$
+    \item Bob peut dépenser cette sortie en signant la transaction avec $x=H_s(Rk^v_b) + k^s_b$ 
+\end{enumerate}
+
+Lorsque Bob vérifie qu'une transaction lui appartient, il effectue 2 multiplations et une addition
+sur la courbe elliptique par sortie. Du point de vue de l'observateur, il n'a connaissance ni 
+de $r$, ni de $k^v_b$ et il n'est pas en capacité de résoudre le
+problème du logarithme discret appliqué aux courbes elliptiques (\acrshort{ecdlp}).\\
+Sous ces hypothèses, l'observateur est en incapacité de connaître le récepteur du message et 
+de résoudre l'adresse de Bob à partir de l'adresse jetable générée par Alice.
+
+\begin{proposition}
+    Soient 2 agents $A_1$ et $A_2$, $A_1$ envoie un message à $A_2$ via une adresse jetable: 
+    $A_1 \rightarrow S$\\
+    Une adresse jetable garantit un anonymat $\alpha_1$ du récepteur si
+    la résolution suivante est difficile :
+    $\Gamma := S \mapsto A_2$ 
+\end{proposition}
+
+
+

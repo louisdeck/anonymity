@@ -1,0 +1,67 @@
+Une signature en anneau est composée d'un anneau et d'une signature. 
+Un anneau est un ensemble de clefs publiques dont l'une appartient au signataire. 
+La signature est générée à l'aide de cet anneau, et toute personne qui la 
+vérifierait ne pourrait pas savoir quel membre de l'anneau est le véritable 
+signataire.\\
+Une signature en anneau d'un message $m$ avec les clefs publiques 
+\{$K_1, K_2,...,K_n$\} prouve qu'une personne ayant connaissance de l'une des clefs 
+privées \{$k_1, k_2,...,k_n$\} a signé le message $m$.\\
+Une signature en anneau est utilisée pour anonymiser l'identité de l'expéditeur 
+parmi un nombre de signataires potentiels. 
+Les entrées de la transaction (\acrshort{utxo}) sont cachées dans un anneau. 
+Une image clef (\textit{\og key image \fg})
+associée  à une signature en anneau garantit que, même si on ne peut pas déterminer
+la source d'une transaction, il est  façile de vérifier si l'expéditeur a tenté 
+d'envoyer les mêmes fonds plusieurs fois (problème de la double dépense). 
+La propriété d'intraçabilité\cite[1]{monero_wp} (\og \textit{untraceability}\fg) est 
+satisfaite : pour chaque transaction entrante, tous les expéditeurs possibles sont 
+équiprobables.\\ 
+Plus la taille de l'anneau est grand, plus la propriété d'intraçabilité est forte.\\
+Du point de vue de l'observateur, il peut résoudre un ensemble de clefs publiques 
+à partir de la signature ($\Gamma := \sigma \mapsto \{K_1, K_2,...,K_n\}$).\\
+Son objectif est de déterminer l'index $\pi$ du réel signataire parmi \{$K_1, K_2,...,K_n$\}.
+
+\bigskip 
+\noindent
+$H_p$ : une fonction de hachage déterministe E($\mathds{F}_q) \rightarrow E( \mathds{F}_q)$
+
+\bigskip 
+\noindent 
+Une signature en anneau contient 4 algorithmes :
+\begin{itemize}
+    \item GEN : le signataire génère $x \in [l-1]$, calcule la clef publique $P = xG$ 
+    et l'image clef correspondante $I = xH_p(P)$\footnotemark
+    \item SIG : prend un message $m$, un ensemble $S'$ de clefs publiques 
+    {$P_i$}($i \neq \pi$), une paire ($P_\pi, x_\pi$) et produit une signature
+    $\sigma$ et un ensemble $S=S'\cup{P_\pi}$ 
+    \item VER : prend un message $m$, un ensemble S, une signature $\sigma$ et
+    indique en sortie "vrai" ou "faux"
+    \item LNK : prend un ensemble $\mathcal{I}=\{I_i\}$ et vérifie si $I$ est contenue dans l'ensemble : lorsqu’une nouvelle transaction est émise sur le réseau, sa signature est vérifiée (VER). Si la signature est correcte, l'image clef de la transaction est comparée aux éléments de l’ensemble, noté $\mathcal{I}$, des images clefs de toutes les transactions passées. Si l'image clef appartient à $\mathcal{I}$, cela signifie que le signataire a effectué une double dépense et la transaction est refusée. Sinon, l'image clef est ajoutée à $\mathcal{I}$ et la transaction est acceptée.
+\end{itemize}
+
+\begin{comment}
+\begin{proposition}
+    Soient deux agents $A_1$,$A_2$ et un ensemble d'agents 
+    A ($A_1 \in A$ et $A_2 \notin A)$\\
+    $A_1$ envoie un message à $A_2$ via une signature en anneau : 
+    $A \rightarrow A_2$\\
+    Une signature en anneau garantit un anonymat $\alpha_5$ de l'émetteur si 
+    $\forall a \in A, p(a \rightarrow A_2)$ est équiprobable. 
+\end{proposition}
+\end{comment}
+
+\begin{proposition}
+    Une signature en anneau garantit un anonymat $\alpha_2$ de l'émetteur si
+    la résolution suivante est difficile : 
+    $\Gamma := A \mapsto A_1$. 
+\end{proposition}
+
+\begin{comment}
+    Another downside to the original CryptoNote set-up is that it requires a given
+    pair of (P, A) of pubkey P and amount A to be used in a ring signature with other
+    pubkeys having the same amount. For less common amounts, this means there may
+    be a smaller number of potential pairs (P ′, A′) available on the blockchain with
+    A′ = A to ring signature with. Thus, in the original CryptoNote protocol, the
+    potential anonymity set is perhaps smaller than may be desired. Analysis of the
+    above weaknesses is covered in [9]
+\end{comment}

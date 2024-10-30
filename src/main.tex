@@ -1,0 +1,92 @@
+\documentclass{article}
+
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{comment}
+\usepackage{dsfont}
+\usepackage{fullpage}
+\usepackage{glossaries}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{xspace}
+\usepackage[
+    style=numeric,
+    sorting=none
+]{biblatex}
+
+\newglossaryentry{blockchain}
+{
+    name=blockchain,
+    description={une base de données distribuée 
+    constituée d’une chaîne de blocs liés et sécurisés 
+    par des hachés cryptographiques.}
+}
+
+\newacronym{aes}{AES}{Advanced Encryption Standard}
+\newacronym{dns}{DNS}{Domain name system}
+\newacronym{ecdlp}{ECDLP}{Elliptic curves discrete logarithm problem}
+\newacronym{esp}{ESP}{Encapsulation security payload}
+\newacronym{ip}{IP}{Internet Protocol}
+\newacronym{ipsec}{IPSec}{Internet Protocol Security}
+\newacronym{p2p}{P2P}{Pair à pair}
+\newacronym{p2pkh}{P2PKH}{Pay-to-Public-Key-Hash}
+\newacronym{ssl}{SSL}{Secure Sockets Layer}
+\newacronym{ringct}{Ring CT}{Ring Confidential Transactions}
+\newacronym{tcp}{TCP}{Transmission Control Protocol}
+\newacronym{tor}{Tor}{The Onion Router}
+\newacronym{tga}{TGA}{Transaction graph analysis}
+\newacronym{utxo}{UTXO}{Somme des sorties non dépensées (\og \textit{unspent transactions outputs}\fg)}
+\newacronym{vpn}{VPN}{Virtual Private Network}
+
+\makeglossaries
+
+\title{Anonymat dans les blockchains}
+\author{Louis de Campou}
+\date{14/09/2023}
+
+\bibliography{sources.bib}
+
+\newtheorem{definition}{Définition}
+\newtheorem{example}{Exemple}
+\newtheorem{proposition}{Proposition}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+\tableofcontents
+
+\newpage
+\section{Introduction}
+\input{docs/introduction.tex}
+
+\section{Espaces de noms}
+\input{docs/np.tex}
+
+\subsection{Adresse Bitcoin \& Monero}
+\input{docs/address.tex}
+    
+\subsection{Transaction Bitcoin \& Monero}
+\input{docs/tx.tex}
+
+\section{Méthodes d'anonymat}
+\input{docs/anon_methods.tex}
+
+\section{Mesure de l'anonymat}
+\input{docs/anon_quantify.tex}
+
+\section{Tableau de niveau de protection}
+\input{docs/table.tex}
+
+\clearpage 
+\printglossaries 
+
+\clearpage
+\printbibliography
+
+\end{document}

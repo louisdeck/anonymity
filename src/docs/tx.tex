@@ -1,0 +1,44 @@
+Une transaction (\og tx \fg) est un objet contenant plusieurs champs dont certains champs sont 
+des espaces de noms (adresse) et d'autres sont des métadonnées (horodatage).\\
+Une transaction représente un mouvement de monnaie d'une adresse à une autre, 
+signée avec la clef privée de l'expéditeur, qui souhaite réattribuer la possession d'une 
+certaine quantité de monnaie à une adresse de destination spécifiée dans la transaction.\\
+Plus précisément, une transaction consiste en :
+\begin{itemize}
+    \item un ensemble d'entrées (\acrshort{utxo}). Chaque entrée contient un montant associé
+    \item un ensemble de sorties ou d'adresses de destination
+    \item un montant à transférer à chaque sortie
+\end{itemize}
+
+\medskip
+\noindent
+Les transactions Bitcoin \& Monero sont définis ci-dessous respectivement.\\
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|l|l|}
+    \hline
+        espace & taille en bits & description \\ \hline
+        hash & 256 & haché de la transaction \\ \hline
+        input & 160 & adresse(s) d'entrée \\ \hline
+        output & 160 & adresse(s) de sortie \\ \hline
+        value & ~ & montants associés aux adresses d'entrée et de sortie \\ \hline
+        signature & ~ & preuve que l'expéditeur a autorisé la transaction \\ \hline
+    \end{tabular}
+    \caption{Transaction Bitcoin}
+\end{table}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|l|l|}
+    \hline
+        espace & taille en bits & description \\ \hline
+        hash & 256 & haché de la transaction \\ \hline
+        input & 256 & image(s) clé(s) \\ \hline
+        output & 256 & adresse(s) jetable(s) \\ \hline
+        %extra & ~ & stockage de donnée arbitraire par le mineur \\ \hline
+        payment id & 64 & chaîne de caractères unique permettant d'identifier une transaction \\ \hline
+        ring signature &  & preuve que l'expéditeur a autorisé la transaction \\ \hline
+    \end{tabular}
+    \caption{Transaction Monero}
+\end{table}
